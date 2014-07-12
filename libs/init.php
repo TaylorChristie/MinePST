@@ -1,5 +1,6 @@
 <?php
-session_start(); 
+session_start();
+date_default_timezone_set('UTC');
 $mysql = array('host' => '127.0.0.1', 'db' => 'minesql-pastebin', 'user' => 'root', 'password' => '');
 require 'custom.php';
 require 'hashid.php';
