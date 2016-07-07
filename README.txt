@@ -1,1 +1,7 @@
-Go into libs/init.php and edit your database settings in the $mysql array, from there everything just works.
+rewrite the database interactions. 
+
+rewrite the way the design is implemented
+
+organize everything properly
+
+follow design patterns dip s**t
