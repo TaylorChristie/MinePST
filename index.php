@@ -8,6 +8,13 @@
 	<body>
 <?php
 require 'libs/init.php';
+
+$app = \MineSQL\App(\PDO $db);
+
+
+$app->start();
+
+
 $file = $_SERVER["SCRIPT_NAME"];
 $break = explode('/', $file);
 $pfile = $break[count($break) - 1]; 
