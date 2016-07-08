@@ -1,5 +1,5 @@
 <?php
-namespace MineSQL\ModelInterface;
+namespace MineSQL\Model;
 
 use MineSQL\DBInterface;
 
