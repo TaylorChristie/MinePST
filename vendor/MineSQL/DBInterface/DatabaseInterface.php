@@ -1,5 +1,5 @@
 <?php
-namespace MineSQL;
+namespace MineSQL/DBInterface;
 
 
 // This is a loose interface for our database which we can hook into a MYSQL 
