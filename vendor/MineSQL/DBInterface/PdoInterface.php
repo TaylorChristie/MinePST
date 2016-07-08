@@ -1,5 +1,5 @@
 <?php
-namespace MineSQL/DBInterface;
+namespace MineSQL\DBInterface;
 
 
 // this class should only wrap the PDO functionality with the basic requirements for database interactions. 
