@@ -11,18 +11,21 @@ use \MineSQL\DBInterface;
 class ConnectionManager
 {
 
-    private $dbConfigFile;
+    private $dbConfigFile, $interfaceLocation;
+    
+    public $interfaces;
     
 
 
-    public function __construct($dbConfigFile = '/config/database.php', $defaultInterface = 'pdo')
+    public function __construct($dbConfigFile = '/config/database.php', $defaultInterface = 'pdo', $interfaceLocation = 'MineSQL/DBInterface')
     {
         $this->dbConfigFile = $dbConfigFile;
         $this->defaultInterface = $defaultInterface;
         $this->parseFile();
+        return $this->getInterface();
     }
     
-    public function parseFile()
+    private function parseFile()
     {
         $file = $this->$dbConfigFile;
         // since this is autoloaded from /vendor the real path is ../$dbConfigFile
@@ -39,7 +42,8 @@ class ConnectionManager
         
         foreach($setting as $key => $arry)
         {
-            $this->populateInterfaces($key, $arry);
+            $files = scandir($this->interfaceLocation); 
+            $this->populateInterfaces($key, $arry, $files);
         }
 
     }
@@ -47,12 +51,22 @@ class ConnectionManager
     
     // This method needs to find the interfaces in \MineSQL\DBInterface and create a new instance of the interface
     // if found.
-    public function populateInterfaces($interfaceType, $information)
+    private function populateInterfaces($interfaceType, $information, $files)
     {
+        foreach($files as $file) 
+        {
+            if(strpos($file, $interfaceType) !== false)
+            {
+                // Assuming are documents are up to PSR standards, we now have the path of the interface which we can initiate through this class
+                $this->interfaces[$interfaceType] = $this->interfaceLocation.'/'.substr($file, 0, -4); 
+            }
+        }
+    }
     
-    
-    
-    
+    // Returns an interface based on the config file and the loaded interfaces
+    private function getInterface()
+    {
+        
     }
 
 
