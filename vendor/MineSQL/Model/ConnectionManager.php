@@ -11,9 +11,9 @@ use \MineSQL\DBInterface;
 class ConnectionManager
 {
 
-    private $dbConfigFile, $interfaceLocation;
+    private $dbConfigFile, $interfaceLocation, $defaultInterface;
     
-    public $interfaces;
+    protected $interfaces;
     
 
 
@@ -64,9 +64,25 @@ class ConnectionManager
     }
     
     // Returns an interface based on the config file and the loaded interfaces
+    // this could be optimized
     private function getInterface()
     {
+        if(array_key_exists($this->defaultInterface, $this->interfaces))
+        {
+            $fileLocation = $this->interfaces[$this->defaultInterface];
+            $class = '\\'.str_replace('/', '\\', $fileLocation);
+            return new $class();
+        } else {
+            if(is_array($this->interfaces))
+            {
+                // Will choose the first configurated interface
+                $fileLocation = $this->interfaces[0];
+                $class = '\\'.str_replace('/', '\\', $fileLocation);
+                return new $class();
+            }
+        }
         
+        throw new Exception('Could not find any interfaces.');
     }
 
 
