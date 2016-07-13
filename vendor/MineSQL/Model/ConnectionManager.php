@@ -5,8 +5,6 @@ namespace \MineSQL\Model;
 // /config/database.php and dynamically chooses a interface from \MineSQL\DBInterface that can be used effortlessly in the model.php
 // file (since the interaction is the exact same) :DDD
 
-use \MineSQL\DBInterface;
-
 
 class ConnectionManager
 {
@@ -40,9 +38,10 @@ class ConnectionManager
             throw new Exception('Could not find the database configuration file: '.$file);   
         }
         
+        $files = scandir($this->interfaceLocation);
+        
         foreach($setting as $key => $arry)
         {
-            $files = scandir($this->interfaceLocation); 
             $this->populateInterfaces($key, $arry, $files);
         }
 
