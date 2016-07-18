@@ -19,17 +19,29 @@ class PdoInterface implements DatabaseInterface {
         $this->dbc = $dbc;
     }
     
-    public function sendPreparedQuery($sql, array $values)
+    public function sendPreparedQuery($sql, array $values = null)
     {
         $dq = $this->dbc->prepare($sql);
-        return $dq->execute($values);
+        if(!empty($values))
+        {
+            return $dq->execute($values);
+        } else {
+            return $dq->execute();
+        }
     }
     
     //returns either one row or multilevel-arrays 
-    public function sendPreparedQueryWithReturn($sql, array $values, $takeOne = 0)
+    public function sendPreparedQueryWithReturn($sql, array $values = null, $takeOne = 0)
     {
         $dq = $this->dbc->prepare($sql);
-        $dq->execute($array);
+       
+       if(!empty($values))
+       {
+            $dq->execute($array);
+       } else 
+       {
+           $dq->execute();
+       }
         return (($takeOne) ? $dq->fetch() : $dq->fetchAll());
     }
 
